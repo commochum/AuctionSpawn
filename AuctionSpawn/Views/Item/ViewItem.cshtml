@@ -1,0 +1,34 @@
+﻿@model AuctionSpawn.Models.Auction
+<br/>
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <table id="auctionItemList" class="table table-bordered table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Start Price</th>
+                        <th>&nbsp;</th>
+                    </tr>   
+                </thead>
+                @if (Model != null && Model.AuctionItems.Count() > 0)
+                {
+                    foreach (var item in Model.AuctionItems)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(auctionItem => item.Title)</td>
+                            <td>@Html.DisplayFor(auctionItem => item.Description)</td>
+                            <td>@Html.DisplayFor(auctionItem => item.StartPrice)</td>
+                            <td>
+                                <div class="delete-section">
+                                  <button type="button" class="customBtn delete-link" onclick="location.href='@Url.Action("DeleteItem", "Item", new { auctionId = Model.ID, itemId = item.ItemID.Value})'">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

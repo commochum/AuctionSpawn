@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Delete Auction";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete Auction</title>
+
+</head>
+<body>
+    <h1>Delete Auction</h1>
+
+    @using (Html.BeginForm())
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>Are you really sure you want to delete this Auction?</h4></div>
+            <div class="panel-body">
+                <h5>Warning!!! Deleting this auction will also delete current items in it! Once deleted, you'll never retrieve it.</h5><br />
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span>
+                                <label for="txtAuctionDescription" class="control-label col-md-3">Auction Description</label>
+                            </span>
+                            <div class="input-group">@ViewBag.auctionDescription</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-1">
+                        <input type="submit" class="btn btn-default customBtn" value="Confirm Delete" /> &nbsp;&nbsp;&nbsp;  
+                        <button type="button" class="btn btn-default customBtn" onclick="location.href='@Url.Action("ViewAuction", "Auction")'">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</body>
+</html>

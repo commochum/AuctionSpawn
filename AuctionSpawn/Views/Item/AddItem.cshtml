@@ -1,0 +1,80 @@
+﻿@model AuctionSpawn.Models.Item
+@{
+    ViewBag.Title = "Add Item";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script type="text/javascript">
+        function validateStartPrice() {
+            if ($("#txtItemStartPrice").val() > 100) {
+                $("#txtItemStartPrice").css("border-color", "green");
+
+            } else {
+                $("#txtItemStartPrice").css("border-color", "#ccc");
+            }
+            return false;
+        }
+
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("AddItem", "Item", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+        <div class="panel panel-default">
+            <div class="panel-heading"><h1 class="panel-title">Add Item</h1></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span>
+                                <label for="txtItemTitle" class="control-label col-md-3">@Html.LabelFor(x => Model.Title)*</label>
+                            </span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                                <input id="txtItemTitle" name="txtItemTitle" class="form-control text-box single-line" type="text" placeholder="Title" required="required" value="@Model.Title" />
+                                @Html.ValidationMessageFor(itemModel => Model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span>
+                                <label for="txtItemDescription" class="control-label col-md-3">Item Description</label>
+                            </span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-file"></i></span>
+                                <input id="txtItemDescription" name="txtItemDescription" class="form-control text-box single-line" type="text" placeholder="Item Description"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span>
+                                <label for="txtItemStartPrice" class="control-label col-md-3">Start Price*</label>
+                            </span>
+                            <div class="input-group">
+                                @Html.TextBoxFor(itemModel => Model.StartPrice, new { id = "txtItemStartPrice", name = Model.StartPrice, required = "required", @class = "form-control text-box single-line", onblur = "validateStartPrice();" })
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    @Html.ValidationMessageFor(itemModel => Model.StartPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <input type="submit" value="Save" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</body>
+</html>

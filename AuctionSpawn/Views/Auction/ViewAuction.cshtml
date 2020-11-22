@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AuctionSpawn.Models.Auction>
+@{
+    ViewBag.Title = "View Auctions";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View Auctions</title>
+</head>
+<body>
+    <h2>View Auctions</h2>
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <table id="auctionList" class="table table-bordered table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>ItemQuantity</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var auction in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(x => auction.ID)</td>
+                                    <td>@Html.DisplayFor(x => auction.Description)</td>
+                                    <td>@Html.DisplayFor(x => auction.Date)</td>
+                                    <td>@Html.DisplayFor(x => auction.ItemQuantity)</td>
+                                    <td>
+                                        <button type="button" class="customBtn" onclick="location.href='@Url.Action("ViewAuctionDetails", "Auction", new { id = auction.ID })'">View</button>
+                                        <button type="button" class="customBtn delete-link" onclick="location.href='@Url.Action("DeleteAuction", "Auction", new { id = auction.ID, description = auction.Description })'">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+        <br />
+        <a class="btn btn-default" href="@Url.Action("CreateAuction", new { area = string.Empty, controller = "Auction" })">Create Auction &raquo;</a>
+        <br />
+        <br />
+        <br />
+        <div>
+            @Html.ActionLink("Back to Home", "Index", "Home")
+        </div>
+    </div>
+</body>
+</html>

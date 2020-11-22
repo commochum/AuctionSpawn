@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "AuctionSpawn";
+}
+
+<div >
+    <div class="view overlay rounded-top">
+        <img src="../Content/Images/AuctionSpawn_BG2.gif" class="img-responsive" alt="AuctionSpawn">
+        <a href="#">
+            <div class="mask rgba-white-slight"></div>
+        </a>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-default lMarginNe30" href="@Url.Action("CreateAuction", new { area = string.Empty, controller = "Auction" })">Create Auction &raquo;</a>
+        <a class="btn btn-default" href="@Url.Action("ViewAuction", new { area = string.Empty, controller = "Auction" })">View Auction &raquo;</a>
+    </div>
+
+        </div>
+

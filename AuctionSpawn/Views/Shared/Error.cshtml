@@ -1,0 +1,29 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+    @{ 
+        ViewBag.Title = "Error Page";
+    }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <hgroup>
+        <h1 class="text-danger">An error occurred while processing your request.</h1>
+        <br />
+        @*<h2 class="text-danger">Action Name: @Model.ActionName</h2>
+        <h2 class="text-danger">Controller Name: @Model.ControllerName</h2>*@
+        <br />
+        <p class="text-danger">Error Message: @Model.Exception.Message</p>
+
+
+        <br />
+        <br />
+        <br />
+        @*  @Html.ActionLink("Back", @Model.ActionName, @Model.ControllerName)*@
+        @Html.ActionLink("Back To Auction", "ViewAuction", "Auction")
+
+    </hgroup>
+</body>
+</html>

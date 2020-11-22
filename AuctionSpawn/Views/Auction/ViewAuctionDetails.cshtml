@@ -1,0 +1,150 @@
+﻿@model AuctionSpawn.Models.Auction
+@{
+    ViewBag.Title = "View Auction Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Auction</title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#baseItemQuantity').hide();
+            $('AddMoreItemsSectionId').hide();
+
+            var count = document.getElementById("auctionItemList").getElementsByTagName("tr").length - 1;
+            var itemQuantity = $('#baseItemQuantity').val();
+            countItems(count, itemQuantity);
+
+            $('#itemCount').val(count);
+
+            $("#auctionItemList td:nth-child(3)").each(function () {
+                if (parseInt($(this).text(), 10) > 100) {
+                    $(this).parent("tr").css("background-color", "red");
+                }
+            });
+
+            $('#SubmitNewItemQuantity').click(function () {
+                if ($('#newItemQuantity').val() > 0) {
+                    //$('#AddItemId').prop('disabled', true);
+                    countItems(count, $('#newItemQuantity').val())
+                    $('#newItemDiv').hide();
+                    $('#SubmitNewItemQuantity').hide();
+                    $('#CancelNewItemQuantity').hide();
+                    $('#newItemQuantity').hide();
+                    $('p#AddMoreMessageId').text('');
+                }
+            });
+
+            $('#CancelNewItemQuantity').click(function () {
+                $('#AddItemId').prop('disabled', true);
+                $('#YesAddMoreId').show();
+                $('#NoAddMoreId').show();
+                $('p#AddMoreMessageId').text("You've reached the allowable item entries. Do you like to add more?");
+                $('#SubmitNewItemQuantity').hide();
+                $('#CancelNewItemQuantity').hide();
+                $('#newItemQuantity').hide();
+            });
+
+            $('#YesAddMoreId').click(function () {
+                $('#YesAddMoreId').hide();
+                $('#NoAddMoreId').hide();
+                $('p#AddMoreMessageId').text("Please enter no. of items to add");
+                $('#SubmitNewItemQuantity').show();
+                $('#CancelNewItemQuantity').show();
+                $('#newItemQuantity').show();
+                $('#newItemQuantity').val(0);
+
+                $('#newItemDiv').show();
+            });
+            
+        });
+
+        function countItems(count, itemQuantity) {
+            if (count == itemQuantity) {
+                $('#AddItemId').prop('disabled', true);
+                $('#AddItemId').hide();
+                $('#AddMoreItemsSectionId').show();
+            } else {
+                $('#AddItemId').prop('disabled', false);
+                $('#AddItemId').show();
+                $('AddMoreItemsSectionId').hide();
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <h4>Auction Details</h4>
+    <hr />
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="txtAuctionDescription" class="control-label col-md-3">@Html.DisplayNameFor(auctionModel => Model.Description)* </label>
+                    <div class="input-group ">
+                        @Html.TextBoxFor(auctionModel => Model.Description, ViewBag.Readonly ? (object)new { @readonly = "readonly", id = "txtAuctionDescription", required = "required", @class = "form-control text-box single-line" } : new { id = "txtAuctionDescription", required = "required", @class = "form-control text-box single-line" })
+                        <div class="col-sm-offset-3">
+                            @Html.ValidationMessageFor(auctionModel => Model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (!ViewBag.isCreate)
+            {
+                <div class="col-sm-3">
+                    <div class="form-group">
+
+                        <input id="itemCount" name="itemCount" class="form-control text-box single-line counterBox" type="text" value="" disabled />
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        @if (!ViewBag.isCreate)
+        {
+            using (Html.BeginForm("AddItem", "Item", FormMethod.Get))
+            {
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button id="AddItemId" type="submit" class="customBtn">Add Item</button>
+                    </div>
+                </div>
+
+            }
+
+            using (Html.BeginForm("ViewAuctionDetails", "Auction", new { id = Model.ID, baseQuantity = @Model.ItemQuantity}, FormMethod.Post))
+            {
+                <br />
+                <input id="baseItemQuantity" name="baseItemQuantity" class="form-control text-box single-line wAddMore" type="text" value="@Model.ItemQuantity" hidden />
+                <div id="AddMoreItemsSectionId" class="row" hidden>
+                    <div class="col-sm-6">
+                        <div>
+                            <p id="AddMoreMessageId">You've reached the allowable item entries. Do you like to add more?</p>
+                            <div id="newItemDiv" hidden>
+                                <input id="newItemQuantity" name="newItemQuantity" class="form-control text-box single-line wAddMore" type="text" />
+                              <button id="SubmitNewItemQuantity" type="submit" class="customBtn">Submit</button>
+                                <button id="CancelNewItemQuantity" type="button" class="customBtn">Cancel</button>
+                            </div>
+                        </div>
+                        <button id="YesAddMoreId" type="button" class="customBtn">Yes</button>
+                    </div>
+                </div>
+            }
+                <br />
+                @RenderPage("~/Views/Item/ViewItem.cshtml")
+            }
+        </div>
+
+    @if (!ViewBag.isCreate)
+    {
+        <div>
+            @Html.ActionLink("Back to List", "ViewAuction", "Auction")
+        </div>
+    }
+</body>
+</html>

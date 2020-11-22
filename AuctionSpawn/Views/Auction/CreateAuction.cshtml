@@ -1,0 +1,29 @@
+﻿@model AuctionSpawn.Models.Auction
+@{
+    ViewBag.Title = "Create Auction";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create an Auction</title>
+</head>
+<body>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+
+        @RenderPage("~/Views/Auction/ViewAuctionDetails.cshtml")
+
+        <br />
+        <div class="row">
+            <div class="col-sm-6">
+                <button id="CreateAuctionBtn" type="submit" class="customBtn">Save Auction</button>
+            </div>
+        </div>
+    }
+
+</body>
+</html>
